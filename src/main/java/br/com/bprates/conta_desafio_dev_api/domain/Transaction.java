@@ -22,13 +22,12 @@ public class Transaction {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private TransactionType type; // DEPOSIT, WITHDRAW
+    private TransactionType type;
 
     private BigDecimal amount;
 
     private LocalDateTime timestamp;
 
-    // Conta associada (muitas transações para uma conta)
     @ManyToOne
     @JoinColumn(nullable = false)
     private Account account;
