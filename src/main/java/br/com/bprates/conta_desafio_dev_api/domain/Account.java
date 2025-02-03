@@ -1,16 +1,16 @@
 package br.com.bprates.conta_desafio_dev_api.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
+@Entity
+@SequenceGenerator(
+        name = "account_number_seq_gen",
+        sequenceName = "account_number_seq",
+        initialValue = 100000,
+        allocationSize = 1
+)
 public class Account {
 
     @Id
@@ -20,7 +20,8 @@ public class Account {
     @Column(nullable = false)
     private String agencyNumber;
 
-    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_number_seq_gen")
+    @Column(unique = true, nullable = false)
     private String accountNumber;
 
     @Column(nullable = false)
@@ -41,13 +42,16 @@ public class Account {
     public Account() {
     }
 
-    public Account(String agencyNumber, String accountNumber, BigDecimal balance, AccountStatus status, AccountBlockStatus blockStatus, Holder holder) {
+    public Account(String agencyNumber, BigDecimal balance, AccountStatus status, AccountBlockStatus blockStatus, Holder holder) {
         this.agencyNumber = agencyNumber;
-        this.accountNumber = accountNumber;
         this.balance = balance;
         this.status = status;
         this.blockStatus = blockStatus;
         this.holder = holder;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getAgencyNumber() {
