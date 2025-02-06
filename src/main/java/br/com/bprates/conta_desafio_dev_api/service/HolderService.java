@@ -4,7 +4,9 @@ import br.com.bprates.conta_desafio_dev_api.domain.Holder;
 import br.com.bprates.conta_desafio_dev_api.repository.HolderRepository;
 import br.com.bprates.conta_desafio_dev_api.utils.CpfUtils;
 import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
+@Service
 public class HolderService {
     private final HolderRepository holderRepository;
 

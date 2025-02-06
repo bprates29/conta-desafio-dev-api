@@ -5,12 +5,6 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@SequenceGenerator(
-        name = "account_number_seq_gen",
-        sequenceName = "account_number_seq",
-        initialValue = 100000,
-        allocationSize = 1
-)
 public class Account {
 
     @Id
@@ -20,7 +14,6 @@ public class Account {
     @Column(nullable = false)
     private String agencyNumber;
 
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "account_number_seq_gen")
     @Column(unique = true, nullable = false)
     private String accountNumber;
 
@@ -42,8 +35,9 @@ public class Account {
     public Account() {
     }
 
-    public Account(String agencyNumber, BigDecimal balance, AccountStatus status, AccountBlockStatus blockStatus, Holder holder) {
+    public Account(String agencyNumber, String accountNumber, BigDecimal balance, AccountStatus status, AccountBlockStatus blockStatus, Holder holder) {
         this.agencyNumber = agencyNumber;
+        this.accountNumber = accountNumber;
         this.balance = balance;
         this.status = status;
         this.blockStatus = blockStatus;

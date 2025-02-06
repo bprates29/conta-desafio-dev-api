@@ -9,11 +9,13 @@ import br.com.bprates.conta_desafio_dev_api.domain.TransactionType;
 import br.com.bprates.conta_desafio_dev_api.repository.AccountRepository;
 import br.com.bprates.conta_desafio_dev_api.repository.TransactionRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+@Service
 public class AccountService {
 
     private final AccountRepository accountRepository;
@@ -31,6 +33,10 @@ public class AccountService {
         this.holderService = holderService;
     }
 
+    public List<Account> getAllAccounts() {
+        return accountRepository.findAll();
+    }
+
     @Transactional
     public Account createAccount(String cpf) {
         Holder holder = holderService.findByCpf(cpf);
@@ -38,8 +44,16 @@ public class AccountService {
             throw new RuntimeException("Holder not found, CPF: " + cpf);
         }
 
+        Long maxAccountNumber = accountRepository.findMaxAccountNumber();
+        if (maxAccountNumber == null) {
+            maxAccountNumber = 100000L;
+        } else {
+            maxAccountNumber++;
+        }
+
         Account account = new Account(
                 AGENCY_NUMBER_PATTERS,
+                maxAccountNumber.toString(),
                 BigDecimal.ZERO,
                 AccountStatus.ACTIVE,
                 AccountBlockStatus.UNBLOCKED,
@@ -143,7 +157,7 @@ public class AccountService {
 
     private BigDecimal getTotalWithdrawByDay(Account account, LocalDate date) {
         BigDecimal total = BigDecimal.ZERO;
-        List<Transaction> transactions = transactionRepository.findAllByAccountAndTypeAndDate(account, TransactionType.WITHDRAW, date);
+        List<Transaction> transactions = transactionRepository.findAllByAccountAndTypeAndTimestampBetween(account, TransactionType.WITHDRAW, date.atStartOfDay(), date.atTime(23, 59, 59));
         for (Transaction t : transactions) {
             if (t.getAccount().getId().equals(account.getId())
                     && t.getType() == TransactionType.WITHDRAW

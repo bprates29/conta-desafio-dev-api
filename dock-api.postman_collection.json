@@ -1,0 +1,291 @@
+{
+	"info": {
+		"_postman_id": "296d6b36-69df-414a-9f1f-20482b79efbe",
+		"name": "dock-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18840396"
+	},
+	"item": [
+		{
+			"name": "Holders",
+			"item": [
+				{
+					"name": "Criar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"fullName\": \"John Doe\", \"cpf\": \"12345678900\"}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/holders",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"holders"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/holders/{holderId}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"holders",
+								"{holderId}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ver todas as contas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/accounts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Criar Conta",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"cpf\": \"12345678900\"}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/accounts",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accounts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Fechar Conta",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/accounts/agency/{agency}/account/{account}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accounts",
+						"agency",
+						"{agency}",
+						"account",
+						"{account}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bloquear Conta",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/accounts/agency/{agency}/account/{account}/block",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accounts",
+						"agency",
+						"{agency}",
+						"account",
+						"{account}",
+						"block"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Desbloquear Conta",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/accounts/agency/{agency}/account/{account}/unblock",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accounts",
+						"agency",
+						"{agency}",
+						"account",
+						"{account}",
+						"unblock"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Depositar",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"amount\": 100.0}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/accounts/agency/{agency}/account/{account}/deposit",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accounts",
+						"agency",
+						"{agency}",
+						"account",
+						"{account}",
+						"deposit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sacar",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"amount\": 50.0}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/accounts/agency/{agency}/account/{account}/withdraw",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accounts",
+						"agency",
+						"{agency}",
+						"account",
+						"{account}",
+						"withdraw"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Extrato",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/accounts/agency/{agency}/account/{account}/statement?startDate=2023-01-01&endDate=2023-12-31",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"accounts",
+						"agency",
+						"{agency}",
+						"account",
+						"{account}",
+						"statement"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2023-01-01"
+						},
+						{
+							"key": "endDate",
+							"value": "2023-12-31"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
