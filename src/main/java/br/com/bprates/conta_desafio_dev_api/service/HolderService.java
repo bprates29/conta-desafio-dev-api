@@ -6,6 +6,8 @@ import br.com.bprates.conta_desafio_dev_api.utils.CpfUtils;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class HolderService {
     private final HolderRepository holderRepository;
@@ -30,12 +32,19 @@ public class HolderService {
     }
 
     @Transactional
-    public void deleteHolder(Long holderId) {
-        // TODO: posso verificar se o holder tem conta ativa antes de remover
-        holderRepository.deleteById(holderId);
+    public void deleteHolder(String cpf) {
+        Holder holder = holderRepository.findByCpf(cpf);
+        if (holder == null) {
+            throw new RuntimeException("Holder not found, CPF: " + cpf);
+        }
+        holderRepository.delete(holder);
     }
 
     public Holder findByCpf(String cpf) {
         return holderRepository.findByCpf(cpf);
+    }
+
+    public List<Holder> getAllHolders() {
+        return holderRepository.findAll();
     }
 }
