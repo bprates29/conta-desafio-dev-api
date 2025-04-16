@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: conta-api-deployment
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: conta-api
+  template:
+    metadata:
+      labels:
+        app: conta-api
+    spec:
+      containers:
+        - name: conta-api
+          image: bprates29/app-conta-api:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:mysql://mysql-service:3306/conta_desafio_dev
+            - name: SPRING_DATASOURCE_USERNAME
+              value: user
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: password
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 10
