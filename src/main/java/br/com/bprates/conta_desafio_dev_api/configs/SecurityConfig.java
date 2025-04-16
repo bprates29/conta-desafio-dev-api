@@ -10,12 +10,13 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll()
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/actuator/**").permitAll() // Libera acesso ao actuator
+                        .anyRequest().authenticated()
                 )
-                .csrf(AbstractHttpConfigurer::disable);
+                .csrf().disable(); // Desativa CSRF para simplificar chamadas via Prometheus
 
         return http.build();
     }

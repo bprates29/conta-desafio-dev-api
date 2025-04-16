@@ -8,6 +8,7 @@ data:
       scrape_interval: 15s
 
     scrape_configs:
-      - job_name: 'kubernetes-pods'
+      - job_name: 'spring-app'
+        metrics_path: /actuator/prometheus
         static_configs:
-          - targets: ['localhost:8080']
+          - targets: ['conta-api-service:8080']
